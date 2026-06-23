@@ -129,17 +129,16 @@
     }
   </style>
 </head>
-<link rel="icon" type="image/png" href="images/goat_icon.png" />
-
+<link rel="icon" type="image/png" href="images/turbine.svg" />
 <body>
   <main class="card">
     <h1>Elliott Twilley</h1>
-    <p class="subtitle">Founder · Grackle Consulting</p>
+    <p class="subtitle">ML Engineer - TurbineOne</p>
 
     <ul class="contact-list">
       <li>
         <span class="label">Email</span>
-        <a href="mailto:ElliottBTwilley@gmail.com">ElliottBTwilley@gmail.com</a>
+        <a href="mailto:ETwilley@turbineone.com">ETwilley@turbineone.com</a>
       </li>
 
       <li>
@@ -152,23 +151,12 @@
         Austin, Texas
       </li>
 
-      <li>
-        <span class="label">LinkedIn</span>
-        <a href="https://www.linkedin.com/in/Elliott-Twilley" target="_blank" rel="noopener">
-          linkedin.com/in/Elliott-Twilley
-        </a>
-      </li>
+      
     </ul>
 
-    <a id="downloadLink" class="button" href="#" download="Elliott_Twilley.vcf">
+    <button id="downloadLink" type="button" class="button">
       Download Contact Card
-    </a>
-
-    <p class="note">
-      Your contact card should download automatically. If it does not, use the button above.
-    </p>
-
-    <a class="home-link" href="index.html">Back to Grackle Consulting</a>
+    </button>
   </main>
 
   <script>
@@ -177,30 +165,34 @@
       "VERSION:3.0",
       "N:Twilley;Elliott;;;",
       "FN:Elliott Twilley",
-      "ORG:Grackle Consulting",
-      "TITLE:Founder",
-      "EMAIL;TYPE=INTERNET,WORK:ElliottBTwilley@gmail.com",
+      "ORG:TurbineOne",
+      "TITLE:ML Engineer",
+      "EMAIL;TYPE=INTERNET,WORK:ETwilley@turbineone.com",
       "TEL;TYPE=CELL:+12079290217",
       "ADR;TYPE=WORK:;;Austin;TX;;;USA",
       "URL:https://www.linkedin.com/in/Elliott-Twilley",
       "END:VCARD"
     ];
 
-    const vcard = vcardLines.join("\r\n");
-    const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
+    function downloadContact() {
+      const vcard = vcardLines.join("\r\n");
+      const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
 
-    const downloadLink = document.getElementById("downloadLink");
-    downloadLink.href = url;
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "Elliott_Twilley.vcf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    document.getElementById("downloadLink").addEventListener("click", downloadContact);
 
     window.addEventListener("load", () => {
-      setTimeout(() => {
-        downloadLink.click();
-      }, 500);
-    });
-
-    window.addEventListener("beforeunload", () => {
-      URL.revokeObjectURL(url);
+      setTimeout(downloadContact, 500);
     });
   </script>
 </body>
